@@ -1,7 +1,7 @@
 import {
   Column,
   CreateDateColumn,
-  Entity,
+  Entity, ManyToOne, OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -52,4 +52,10 @@ export class UserEntity {
     type: 'timestamp',
   })
   deletedAt: Date;
+
+  @OneToMany(() => AuditLogEntity, (audit_log) => audit_log.user)
+  auditLogs: AuditLog;
+
+  @ManyToOne(() => EventEntity, (event) => event.user)
+  events: Event;
 }
