@@ -1,18 +1,16 @@
 import {
   Column,
   CreateDateColumn,
-  Entity, ManyToOne, OneToMany,
+  Entity,
+  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-
-enum UserRole {
-  ADMIN = 'admin',
-  USER = 'user',
-}
+import { UserRole } from '../enums/user-role.enum';
 
 @Entity('user')
-export class UserEntity {
+export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -24,16 +22,21 @@ export class UserEntity {
   role: UserRole;
 
   @Column({
+    type: 'string',
     length: 255,
   })
   firstName: string;
 
   @Column({
+    type: 'string',
     length: 255,
   })
   lastName: string;
 
-  @Column()
+  @Column({
+    select: false,
+    type: 'string',
+  })
   password: string;
 
   @CreateDateColumn({
@@ -45,7 +48,7 @@ export class UserEntity {
     nullable: true,
     type: 'timestamp',
   })
-  updatedAt: Date;
+  updatedAt?: Date;
 
   @CreateDateColumn({
     nullable: true,
