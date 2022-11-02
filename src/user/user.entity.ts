@@ -54,7 +54,7 @@ export class User {
     nullable: true,
     type: 'timestamp',
   })
-  deletedAt: Date;
+  deletedAt?: Date;
 
   @OneToMany(() => AuditLogEntity, (audit_log) => audit_log.user)
   auditLogs: AuditLogEntity;
