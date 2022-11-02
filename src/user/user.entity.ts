@@ -54,8 +54,8 @@ export class UserEntity {
   deletedAt: Date;
 
   @OneToMany(() => AuditLogEntity, (audit_log) => audit_log.user)
-  auditLogs: AuditLog;
+  auditLogs: AuditLogEntity;
 
   @ManyToOne(() => EventEntity, (event) => event.user)
-  events: Event;
+  events: EventEntity;
 }
