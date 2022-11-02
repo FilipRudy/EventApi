@@ -22,43 +22,43 @@ export class User {
   role: UserRole;
 
   @Column({
-    type: 'string',
+    type: 'varchar',
     length: 255,
   })
   firstName: string;
 
   @Column({
-    type: 'string',
+    type: 'varchar',
     length: 255,
   })
   lastName: string;
 
   @Column({
     select: false,
-    type: 'string',
+    type: 'varchar',
   })
   password: string;
 
   @CreateDateColumn({
-    type: 'timestamp',
+    type: 'timestamp with time zone',
   })
   createdAt: Date;
 
   @UpdateDateColumn({
     nullable: true,
-    type: 'timestamp',
+    type: 'timestamp with time zone',
   })
   updatedAt?: Date;
 
   @CreateDateColumn({
     nullable: true,
-    type: 'timestamp',
+    type: 'timestamp with time zone',
   })
   deletedAt?: Date;
-
+  /*
   @OneToMany(() => AuditLogEntity, (audit_log) => audit_log.user)
   auditLogs: AuditLogEntity;
 
   @ManyToOne(() => EventEntity, (event) => event.user)
-  events: EventEntity;
+  events: EventEntity;*/
 }
