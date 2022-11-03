@@ -1,0 +1,3 @@
+export enum EventType {
+  EVENT_CREATE_SUCCESS = 'EVENT_CREATE_SUCCESS',
+}

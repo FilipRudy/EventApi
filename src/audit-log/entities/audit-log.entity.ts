@@ -6,6 +6,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { EventType } from '../enums/audit-log.enum';
+import { User } from '../../user/entities/user.entity';
 
 @Entity('audit_log')
 export class AuditLog {
@@ -19,11 +20,11 @@ export class AuditLog {
   eventType: EventType;
 
   @Column({
-    type: 'json',
+    type: 'jsonb',
   })
   details: string;
 
-  @ManyToOne(() => User, (userId) => userId.audit_log)
-  @JoinColumn()
-  userId: number;
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'userId' })
+  user: User;
 }
