@@ -8,7 +8,7 @@ import {
 import { EventType } from '../enums/audit-log.enum';
 
 @Entity('audit_log')
-export class AuditLogEntity {
+export class AuditLog {
   @PrimaryGeneratedColumn()
   id: number;
 
