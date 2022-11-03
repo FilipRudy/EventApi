@@ -3,33 +3,33 @@ import {
   PrimaryGeneratedColumn,
   Entity,
   Column,
-  OneToMany,
+  ManyToMany,
 } from 'typeorm';
 import { timestamp } from 'rxjs';
 
 @Entity('event')
-export class EventEntity {
+export class Event {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({
-    type: 'string',
+    type: 'varchar',
     length: 255,
   })
   title: string;
 
   @Column({
-    type: 'string',
+    type: 'varchar',
     length: 255,
   })
   description: string;
 
   @Column({
-    type: 'timestamp',
+    type: 'timestamp with time zone',
   })
   date: Date;
 
-  @OneToMany(() => UserEntity, (user) => user.event)
+  @ManyToMany(() => UserEntity, (user) => user.event)
   @JoinColumn()
   users: User;
 }
