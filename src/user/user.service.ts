@@ -10,7 +10,13 @@ export class UserService {
     private usersRepository: Repository<User>,
   ) {}
 
+  private readonly users: User[] = [];
+
   findOne(id: number): Promise<User> {
     return this.usersRepository.findOneBy({ id });
+  }
+
+  findAll(): User[] {
+    return this.users;
   }
 }
