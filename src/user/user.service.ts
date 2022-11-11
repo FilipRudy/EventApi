@@ -116,6 +116,6 @@ export class UserService {
       await queryRunner.release();
     }
 
-    return `${id}`;
+    return id;
   }
 }

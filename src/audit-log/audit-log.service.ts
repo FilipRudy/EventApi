@@ -22,7 +22,7 @@ export class AuditLogService {
     auditLogType: EventType,
     details?: string,
     userId?: User,
-  ): Promise<string> {
+  ): Promise<any> {
     const newAuditLog: AuditLogInterface = {
       auditLogType,
       details,
@@ -44,7 +44,5 @@ export class AuditLogService {
     } finally {
       await queryRunner.release();
     }
-
-    return `Audit log for this operation was created`;
   }
 }
