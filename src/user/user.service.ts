@@ -6,6 +6,9 @@ import { UserDTO } from './dtos/create-user.dto';
 import { EventType } from '../audit-log/enums/audit-log.enum';
 import { AuditLogService } from '../audit-log/audit-log.service';
 import { UserRole } from './enums/user-role.enum';
+import { PageOptionsDto } from '../page/dtos/page-options.dto';
+import { PageDto } from '../page/dtos/page.dto';
+import { PageMetaDto } from '../page/dtos/page-meta.dto';
 
 @Injectable()
 export class UserService {
@@ -22,8 +25,20 @@ export class UserService {
     });
   }
 
-  async findAll(): Promise<User[]> {
-    return this.usersRepository.find();
+  async findAll(pageOptionsDto: PageOptionsDto): Promise<PageDto<UserDTO>> {
+    const queryBuilder = this.usersRepository.createQueryBuilder('user');
+
+    queryBuilder
+      .orderBy('user.createdAt', pageOptionsDto.order)
+      .skip(pageOptionsDto.skip)
+      .take(pageOptionsDto.take);
+
+    const itemCount = await queryBuilder.getCount();
+    const { entities } = await queryBuilder.getRawAndEntities();
+
+    const pageMetaDto = new PageMetaDto({ itemCount, pageOptionsDto });
+
+    return new PageDto(entities, pageMetaDto);
   }
 
   //@TODO Remove User password in audit log

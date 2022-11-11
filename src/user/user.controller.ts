@@ -7,18 +7,23 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { UserDTO } from './dtos/create-user.dto';
 import { UserService } from './user.service';
 import { User } from './entities/user.entity';
+import { PageOptionsDto } from '../page/dtos/page-options.dto';
+import { PageDto } from '../page/dtos/page.dto';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  async findAll() {
-    return this.userService.findAll();
+  async findAll(
+    @Query() pageOptionsDto: PageOptionsDto,
+  ): Promise<PageDto<UserDTO>> {
+    return this.userService.findAll(pageOptionsDto);
   }
 
   @Get(':id')
