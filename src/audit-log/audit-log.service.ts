@@ -4,33 +4,38 @@ import { DataSource, Repository } from 'typeorm';
 import { AuditLog } from './entities/audit-log.entity';
 import { EventType } from './enums/audit-log.enum';
 import { User } from '../user/entities/user.entity';
+import { AuditLogInterface } from './intefaces/audit-log.interface';
 
 @Injectable()
 export class AuditLogService {
-  //Here starts the fragment that causes the error
   constructor(
     @InjectRepository(AuditLog)
-    private auditLogsRepository: Repository<AuditLog>,
-    private dataSource: DataSource,
+    private readonly auditLogsRepository: Repository<AuditLog>,
+    private readonly dataSource: DataSource,
   ) {}
 
-  async findAll() {
+  async findAll(): Promise<AuditLog[]> {
     return this.auditLogsRepository.find();
   }
 
-  async create(auditLogType: EventType, details?: string, userId?: User) {
-    const newAuditLog = {
-      eventType: auditLogType,
-      details: details,
-      user: userId,
+  async create(
+    auditLogType: EventType,
+    details?: string,
+    userId?: User,
+  ): Promise<string> {
+    const newAuditLog: AuditLogInterface = {
+      auditLogType,
+      details,
+      userId,
     };
 
     const queryRunner = await this.dataSource.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
 
+    await this.auditLogsRepository.create(newAuditLog);
+
     try {
-      await this.auditLogsRepository.create(newAuditLog);
       await this.auditLogsRepository.save(newAuditLog);
       await queryRunner.commitTransaction();
     } catch (err) {
@@ -39,5 +44,7 @@ export class AuditLogService {
     } finally {
       await queryRunner.release();
     }
+
+    return `Audit log for this operation was created`;
   }
 }

@@ -27,17 +27,20 @@ export class UserController {
   }
 
   @Post()
-  create(@Body() userDTO: UserDTO) {
+  async create(@Body() userDTO: UserDTO) {
     return this.userService.create(userDTO);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.delete(parseInt(id));
+  async remove(@Param('id', ParseIntPipe) userId: number) {
+    return this.userService.delete(userId);
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() UserDTO: UserDTO) {
-    return this.userService.update(parseInt(id), UserDTO);
+  async update(
+    @Param('id', ParseIntPipe) userId: number,
+    @Body() UserDTO: UserDTO,
+  ) {
+    return this.userService.update(userId, UserDTO);
   }
 }

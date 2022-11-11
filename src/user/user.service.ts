@@ -6,6 +6,7 @@ import { UserDTO } from './dtos/create-user.dto';
 import { EventType } from '../audit-log/enums/audit-log.enum';
 import { AuditLogService } from '../audit-log/audit-log.service';
 import { UserRole } from './enums/user-role.enum';
+import { AuditLogInterface } from '../audit-log/intefaces/audit-log.interface';
 
 @Injectable()
 export class UserService {
@@ -22,7 +23,7 @@ export class UserService {
     });
   }
 
-  findAll() {
+  async findAll(): Promise<User[]> {
     return this.usersRepository.find();
   }
 
@@ -58,7 +59,7 @@ export class UserService {
     return newUser;
   }
 
-  async update(id: number, userDTO: UserDTO) {
+  async update(id: number, userDTO: UserDTO): Promise<User> {
     const user = await this.usersRepository.preload({
       id: id,
       ...userDTO,
@@ -107,7 +108,7 @@ export class UserService {
     } catch (err) {
       await this.auditLogService.create(
         EventType.USER_DELETE_FAIL,
-        `Deleted user at id: ${id}`,
+        `Failed to delete user at id: ${id}`,
       );
       await queryRunner.rollbackTransaction();
       throw err;
@@ -115,6 +116,6 @@ export class UserService {
       await queryRunner.release();
     }
 
-    return `Deleted user at id: ${id}`;
+    return `${id}`;
   }
 }
