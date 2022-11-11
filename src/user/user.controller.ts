@@ -16,7 +16,7 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Get()
-  async findAll(): Promise<User[]> {
+  async findAll() {
     return this.userService.findAll();
   }
 
@@ -26,17 +26,17 @@ export class UserController {
   }
 
   @Post()
-  async create(@Body() UserDTO: UserDTO) {
-    return 'user created';
+  create(@Body() userDTO: UserDTO) {
+    return this.userService.create(userDTO);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return `user with id: ${id} deleted`;
+    return this.userService.delete(parseInt(id));
   }
 
   @Put(':id')
   update(@Param('id') id: string, @Body() UserDTO: UserDTO) {
-    return `user with id: ${id} updated`;
+    return this.userService.update(parseInt(id), UserDTO);
   }
 }

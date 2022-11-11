@@ -1,16 +1,13 @@
 import { Controller, Get, Param, Post } from '@nestjs/common';
+import { UserService } from '../user/user.service';
+import { AuditLogService } from './audit-log.service';
 
 @Controller('audit-logs')
 export class AuditLogController {
+  constructor(private auditLogService: AuditLogService) {}
+
   @Get()
-  findAll(): string {
-    return 'returning everything';
-  }
-
-  @Get(':id')
-  findOne(@Param() params): string {
-    console.log(params.id);
-
-    return `${params.id}`;
+  async findAll() {
+    return this.auditLogService.findAll();
   }
 }

@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AuditLogController } from './audit-log/audit-log.controller';
 import { UserController } from './user/user.controller';
 import { UserModule } from './user/user.module';
+import { AuditLogModule } from './audit-log/audit-log.module';
 import appConfig from './config/app.config';
 
 @Module({
@@ -12,7 +13,7 @@ import appConfig from './config/app.config';
     TypeOrmModule.forRootAsync(typeOrmConfig),
     ConfigModule.forRoot({ load: [appConfig] }),
     UserModule,
+    AuditLogModule,
   ],
-  providers: [],
 })
 export class AppModule {}

@@ -21,10 +21,11 @@ export class AuditLog {
 
   @Column({
     type: 'jsonb',
+    nullable: true,
   })
-  details: string;
+  details?: string;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { nullable: true })
   @JoinColumn({ name: 'userId' })
-  user: User;
+  user?: User;
 }
