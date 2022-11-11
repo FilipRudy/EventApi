@@ -2,7 +2,7 @@ import { EventType } from '../enums/audit-log.enum';
 import { User } from '../../user/entities/user.entity';
 
 export interface AuditLogInterface {
-  auditLogType: EventType;
+  eventType: EventType;
   details?: string;
   user?: User;
 }

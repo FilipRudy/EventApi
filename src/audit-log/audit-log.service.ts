@@ -1,4 +1,4 @@
-import { Injectable, Param } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { AuditLog } from './entities/audit-log.entity';
@@ -19,12 +19,12 @@ export class AuditLogService {
   }
 
   async create(
-    auditLogType: EventType,
+    eventType: EventType,
     details?: string,
     user?: User,
   ): Promise<void> {
     const newAuditLog: AuditLogInterface = {
-      auditLogType,
+      eventType,
       details,
       user,
     };

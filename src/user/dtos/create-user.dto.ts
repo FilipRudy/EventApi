@@ -1,5 +1,4 @@
-import { IsDate, IsEnum, IsString } from 'class-validator';
-import { UserRole } from '../enums/user-role.enum';
+import { IsString } from 'class-validator';
 
 export class UserDTO {
   @IsString()

@@ -6,7 +6,6 @@ import { UserDTO } from './dtos/create-user.dto';
 import { EventType } from '../audit-log/enums/audit-log.enum';
 import { AuditLogService } from '../audit-log/audit-log.service';
 import { UserRole } from './enums/user-role.enum';
-import { AuditLogInterface } from '../audit-log/intefaces/audit-log.interface';
 
 @Injectable()
 export class UserService {
