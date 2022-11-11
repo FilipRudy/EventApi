@@ -21,12 +21,12 @@ export class AuditLogService {
   async create(
     auditLogType: EventType,
     details?: string,
-    userId?: User,
-  ): Promise<any> {
+    user?: User,
+  ): Promise<void> {
     const newAuditLog: AuditLogInterface = {
       auditLogType,
       details,
-      userId,
+      user,
     };
 
     const queryRunner = await this.dataSource.createQueryRunner();
