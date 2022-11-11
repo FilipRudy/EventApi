@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Post,
   Put,
 } from '@nestjs/common';
@@ -13,7 +14,7 @@ import { User } from './entities/user.entity';
 
 @Controller('user')
 export class UserController {
-  constructor(private userService: UserService) {}
+  constructor(private readonly userService: UserService) {}
 
   @Get()
   async findAll() {
@@ -21,8 +22,8 @@ export class UserController {
   }
 
   @Get(':id')
-  async findOne(@Param() params): Promise<User> {
-    return this.userService.findOne(params);
+  async findOne(@Param('id', ParseIntPipe) userId: number): Promise<User> {
+    return this.userService.findOne(userId);
   }
 
   @Post()

@@ -7,7 +7,7 @@ import { AuditLog } from '../audit-log/entities/audit-log.entity';
 import { AuditLogModule } from '../audit-log/audit-log.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User])],
+  imports: [TypeOrmModule.forFeature([User]), AuditLogModule],
   controllers: [UserController],
   exports: [UserModule],
   providers: [UserService],

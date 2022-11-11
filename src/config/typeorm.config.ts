@@ -17,7 +17,7 @@ export const typeOrmConfig: TypeOrmModuleAsyncOptions = {
       database: process.env.POSTGRES_NAME,
       synchronize: true,
       logging: false,
-      entities: [__dirname + '/*/.entity{.ts,.js}'],
+      entities: [__dirname + '/../**/*.entity.js'],
     };
   },
 };

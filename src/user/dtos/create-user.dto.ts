@@ -2,9 +2,6 @@ import { IsDate, IsEnum, IsString } from 'class-validator';
 import { UserRole } from '../enums/user-role.enum';
 
 export class UserDTO {
-  @IsEnum(UserRole)
-  role: UserRole;
-
   @IsString()
   firstName: string;
 
@@ -13,13 +10,4 @@ export class UserDTO {
 
   @IsString()
   password: string;
-
-  @IsDate()
-  createdAt: Date;
-
-  @IsDate()
-  updatedAt: Date;
-
-  @IsDate()
-  deletedAt: Date;
 }
