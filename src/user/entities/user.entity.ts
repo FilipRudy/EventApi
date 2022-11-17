@@ -32,7 +32,6 @@ export class User {
   lastName: string;
 
   @Column({
-    select: false,
     type: 'varchar',
     length: 255,
   })
