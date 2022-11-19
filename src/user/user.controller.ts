@@ -12,7 +12,7 @@ import {
 import { UserDTO } from './dtos/create-user.dto';
 import { UserService } from './user.service';
 import { User } from './entities/user.entity';
-import { JwtAuthGuard } from '../auth/strategies/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @UseGuards(JwtAuthGuard)
 @Controller('user')
