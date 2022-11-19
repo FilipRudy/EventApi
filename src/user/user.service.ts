@@ -22,6 +22,14 @@ export class UserService {
     });
   }
 
+  async findOneByName(username: string): Promise<User> {
+    return this.usersRepository
+      .findOneByOrFail({ firstName: username })
+      .catch(() => {
+        throw new NotFoundException(`User ${username} not found`);
+      });
+  }
+
   async findAll(): Promise<User[]> {
     return this.usersRepository.find();
   }
