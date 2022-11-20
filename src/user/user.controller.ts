@@ -7,14 +7,11 @@ import {
   ParseIntPipe,
   Post,
   Put,
-  UseGuards,
 } from '@nestjs/common';
 import { UserDTO } from './dtos/create-user.dto';
 import { UserService } from './user.service';
 import { User } from './entities/user.entity';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
-@UseGuards(JwtAuthGuard)
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -27,11 +24,6 @@ export class UserController {
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) userId: number): Promise<User> {
     return this.userService.findOne(userId);
-  }
-
-  @Get('/byName/:firstName')
-  async findOneByName(@Param('firstName') firstName: string): Promise<User> {
-    return this.userService.findOneByName(firstName);
   }
 
   @Post()

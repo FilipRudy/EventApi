@@ -35,6 +35,13 @@ export class User {
     type: 'varchar',
     length: 255,
   })
+  email: string;
+
+  @Column({
+    type: 'varchar',
+    length: 255,
+    select: false,
+  })
   password: string;
 
   @CreateDateColumn({

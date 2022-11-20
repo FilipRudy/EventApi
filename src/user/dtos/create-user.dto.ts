@@ -9,4 +9,7 @@ export class UserDTO {
 
   @IsString()
   password: string;
+
+  @IsString()
+  email: string;
 }

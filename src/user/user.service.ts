@@ -6,6 +6,7 @@ import { UserDTO } from './dtos/create-user.dto';
 import { EventType } from '../audit-log/enums/audit-log.enum';
 import { AuditLogService } from '../audit-log/audit-log.service';
 import { UserRole } from './enums/user-role.enum';
+import { encodePassword } from '../common/utils/bcrypt';
 
 @Injectable()
 export class UserService {
@@ -22,11 +23,14 @@ export class UserService {
     });
   }
 
-  async findOneByName(username: string): Promise<User> {
+  async findOneForAuth(email: string): Promise<User> {
     return this.usersRepository
-      .findOneByOrFail({ firstName: username })
+      .findOneOrFail({
+        where: { email },
+        select: ['id', 'firstName', 'lastName', 'role', 'email', 'password'],
+      })
       .catch(() => {
-        throw new NotFoundException(`User ${username} not found`);
+        throw new NotFoundException(`User with email: ${email} not found`);
       });
   }
 
@@ -36,9 +40,11 @@ export class UserService {
 
   //@TODO Remove User password in audit log
   async create(userDTO: UserDTO): Promise<User> {
+    const password1 = await encodePassword(userDTO.password);
     const newUser = this.usersRepository.create({
       ...userDTO,
       role: UserRole.USER,
+      password: password1,
     });
 
     const queryRunner = await this.dataSource.createQueryRunner();
@@ -62,6 +68,7 @@ export class UserService {
     } finally {
       await queryRunner.release();
     }
+    delete newUser.password;
 
     return newUser;
   }
